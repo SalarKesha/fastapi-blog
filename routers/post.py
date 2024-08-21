@@ -25,6 +25,8 @@ async def get_posts():
 async def get_post(post_id: str):
     validate_object_id(post_id)
     post = await db.posts.find_one({'post_id': post_id})
+    if not post:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Post did not found')
     return post
 
 
